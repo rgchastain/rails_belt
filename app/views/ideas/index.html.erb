@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input {
+			width: 300px;
+		}
+		.box {
+			width: 250px;
+			border: 1px solid black
+
+		}
+	</style>
+</head>
+<body>
+
+<h3>Hi, <%= @user.alias %>!</h3>
+
+<form action="/ideas" method="post">
+		<input type="hidden" name="authenticity_token" class="<%=form_authenticity_token%>">
+		<p><input type="text" name="idea[content]" placeholder="Post something witty here..."> <button type="submit">Idea!</button></p>
+</form>
+
+<% @idea.sort{ |a,b| b.likes.count <=> a.likes.count}.each do |idea| %>
+	<p><a href="/users/<%= idea.user.id %>"><%= idea.user.alias %></a> says:</p>
+	<div class="box">
+		<%= idea.content %></p>
+	</div>
+	<p><%= link_to "Like", like_path(:id => idea.id), :method => :create %> 
+
+	<a href="/ideas/<%= idea.id %>"><%= idea.likes.count %> people</a> like this</p>
+	
+	
+	
+	<% if idea.user == current_user %>
+		<a href="/ideas/<%= idea.id %>" data-method="delete">Delete</a>
+	<% end %>
+	<hr>
+<% end %>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.box{
+			width: 250px;
+			border: 1px solid black
+		}
+	</style>
+</head>
+<body>
+
+<a href="/ideas">Bright Ideas</a>
+
+<p><a href="/users/<%= @user.id %>"><%= @idea.user.alias %></a> says:</p>
+<div class="box">
+<p><%= @idea.content %></p>
+</div>
+<br>
+<p>People who liked this post:</p>
+<table>
+	<tr>
+		<th>Alias</th>
+		<th>Name</th>
+	</tr>
+	<% @idea.likers.each do |person| %>
+	<tr>
+		<td><a href="/users/<%= person.id %>"><%= person.alias %></a></td>
+		<td><%= person.name %></td>
+	</tr>
+	<% end %>
+</table>
+
+</body>
+</html>
